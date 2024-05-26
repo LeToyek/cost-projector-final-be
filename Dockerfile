@@ -10,6 +10,6 @@ COPY . .
 
 # RUN npm run start
 
-EXPOSE 3000
+EXPOSE $PORT
 
 CMD ["npm", "run start"]
