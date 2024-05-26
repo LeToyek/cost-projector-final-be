@@ -1,5 +1,7 @@
 FROM node:14
 
+ENV PORT=$PORT
+
 WORKDIR /app
 
 COPY package*.json ./
