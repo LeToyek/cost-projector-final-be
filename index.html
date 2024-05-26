@@ -1,0 +1,47 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socket.IO Chat</title>
+</head>
+<body>
+  <h1>Socket.IO Chat</h1>
+  
+  <div id="messages"></div>
+
+  <form id="messageForm">
+    <input type="text" id="messageInput" placeholder="Type your message...">
+    <button type="submit">Send</button>
+  </form>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+  <script>
+    const socket = io('http://localhost:3000'); // Connect to localhost:3000
+
+    const messageForm = document.getElementById('messageForm');
+    const messageInput = document.getElementById('messageInput');
+    const messagesDiv = document.getElementById('messages');
+
+    const senderId = '1'; // Hardcoded sender ID
+    const receiverId = '2'; // Hardcoded receiver ID
+
+    messageForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const content = messageInput.value.trim();
+      if (content !== '') {
+        const message = { sender_id: senderId, receiver_id: receiverId, content };
+        socket.emit('chat message', message);
+        messageInput.value = '';
+      }
+    });
+
+    socket.on('chat message', (msg) => {
+      const messageElement = document.createElement('div');
+      messageElement.textContent = msg.content;
+      messagesDiv.appendChild(messageElement);
+    });
+  </script>
+</body>
+</html>
