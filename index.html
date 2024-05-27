@@ -40,6 +40,14 @@
     socket.on('chat message', (msg) => {
       const messageElement = document.createElement('div');
       messageElement.textContent = msg.content;
+      if (msg.sender_id === senderId) {
+        messageElement.style.textAlign = 'right';
+        messageElement.style.backgroundColor = 'lightblue';
+        messagesDiv.appendChild(messageElement);
+        return
+      }
+      messageElement.style.textAlign = 'left';
+      messageElement.style.backgroundColor = 'lightgreen';
       messagesDiv.appendChild(messageElement);
     });
   </script>

@@ -12,12 +12,13 @@ export class SocketIOChatHandler {
     this.io.on("connection", (socket: Socket) => {
       console.log("A user connected");
 
-      socket.on("chat message", (msg: any) => {
+      socket.on("chat message", async (msg: any) => {
         console.log("message: " + msg);
         this.io.emit("chat message", msg);
 
         // Send the message to Telegram
-        this.messageUseCase.createMessage(msg) // Replace with actual chat ID
+        const groqRes = await this.messageUseCase.createMessage(msg) // Replace with actual chat ID
+        this.io.emit("chat message", groqRes);
       });
 
       socket.on("disconnect", () => {

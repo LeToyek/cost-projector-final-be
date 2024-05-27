@@ -1,7 +1,5 @@
 FROM node:14
 
-ENV PORT=$PORT
-
 WORKDIR /app
 
 COPY package*.json ./
@@ -12,6 +10,6 @@ COPY . .
 
 # RUN npm run start
 
-EXPOSE $PORT
+EXPOSE 3000
 
 CMD ["npm", "run start"]
